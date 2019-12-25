@@ -19,3 +19,15 @@ jobs:
       run: |
         sage --version
         python3 setup.py test
+  build_with_ubuntu_sage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install SageMath and CBC
+      run: |
+        sudo apt install sagemath coinor-cbc
+    - name: Test package
+      run: |
+        sage --version
+        python3 setup.py test
+

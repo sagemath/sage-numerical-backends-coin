@@ -22,10 +22,22 @@ def readfile(filename):
         return f.read()
 
  # Cython modules
+import pkgconfig
+
+cbc_pc = pkgconfig.parse('cbc')
+if cbc_pc:
+    print("Using pkgconfig: {}".format(sorted(cbc_pc.items())), file=sys.stderr)
+cbc_libs = cbc_pc['libraries']
+cbc_library_dirs = cbc_pc['library_dirs']
+cbc_include_dirs = cbc_pc['include_dirs']
+
+
 ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
-                         sources = [os.path.join('sage_numerical_backends_coin',
-                                     'coin_backend.pyx')],
-                         include_dirs=sage_include_directories())
+                         sources=[os.path.join('sage_numerical_backends_coin',
+                                    'coin_backend.pyx')],
+                         libraries=cbc_libs,
+                         include_dirs=sage_include_directories() + cbc_include_dirs,
+                         library_dirs=cbc_library_dirs)
     ]
 
 setup(
@@ -59,4 +71,6 @@ setup(
     package_dir={'sage_numerical_backends_coin': 'sage_numerical_backends_coin'},
     package_data={'sage_numerical_backends_coin': ['*.pxd']},
     install_requires = ['sage>=8', 'sage-package', 'sphinx'],
+    setup_requires   = ['pkgconfig'],
+
 )

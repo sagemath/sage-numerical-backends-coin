@@ -25,44 +25,44 @@ from sage.numerical.backends.generic_backend cimport GenericBackend
 from libcpp cimport bool
 
 
-cdef extern from "coin/CbcStrategy.hpp":
+cdef extern from "CbcStrategy.hpp":
     cdef cppclass CbcStrategy:
         pass
     cdef cppclass CbcStrategyDefault(CbcStrategy):
         CbcStrategyDefault()
 
-cdef extern from "coin/CoinPackedVectorBase.hpp":
+cdef extern from "CoinPackedVectorBase.hpp":
     cdef cppclass CoinPackedVectorBase:
         pass
 
-cdef extern from "coin/CoinPackedVector.hpp":
+cdef extern from "CoinPackedVector.hpp":
      cdef cppclass CoinPackedVector(CoinPackedVectorBase):
          void insert(float, float)
 
-cdef extern from "coin/CoinShallowPackedVector.hpp":
+cdef extern from "CoinShallowPackedVector.hpp":
      cdef cppclass CoinShallowPackedVector:
          void insert(float, float)
          int * getIndices ()
          double * getElements ()
          int getNumElements ()
 
-cdef extern from "coin/CoinPackedMatrix.hpp":
+cdef extern from "CoinPackedMatrix.hpp":
      cdef cppclass CoinPackedMatrix:
          void setDimensions(int, int)
          void appendRow(CoinPackedVector)
          CoinShallowPackedVector getVector(int)
 
-cdef extern from "coin/CoinMessageHandler.hpp":
+cdef extern from "CoinMessageHandler.hpp":
      cdef cppclass CoinMessageHandler:
          void setLogLevel (int)
          int LogLevel ()
 
 
-cdef extern from "coin/OsiSolverParameters.hpp":
+cdef extern from "OsiSolverParameters.hpp":
     cdef enum OsiIntParam:
         OsiMaxNumIteration = 0, OsiMaxNumIterationHotStart, OsiNameDiscipline, OsiLastIntParam
 
-cdef extern from "coin/OsiSolverInterface.hpp":
+cdef extern from "OsiSolverInterface.hpp":
 
      cdef cppclass OsiSolverInterface:
 
@@ -149,7 +149,7 @@ cdef extern from "coin/OsiSolverInterface.hpp":
         # Resolve an LP relaxation after problem modification
         void resolve()
 
-cdef extern from "coin/CbcModel.hpp":
+cdef extern from "CbcModel.hpp":
      cdef cppclass CbcModel:
          # default constructor
          CbcModel()
@@ -176,11 +176,11 @@ cdef extern from "coin/CbcModel.hpp":
          CoinMessageHandler * messageHandler ()
      void CbcMain0(CbcModel m)
 
-cdef extern from "coin/ClpSimplex.hpp":
+cdef extern from "ClpSimplex.hpp":
     cdef cppclass ClpSimplex:
         void setNumberThreads(int)
 
-cdef extern from "coin/OsiClpSolverInterface.hpp":
+cdef extern from "OsiClpSolverInterface.hpp":
 
      cdef cppclass OsiClpSolverInterface(OsiSolverInterface):
 

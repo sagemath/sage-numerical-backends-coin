@@ -40,7 +40,8 @@ ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
                                     'coin_backend.pyx')],
                          libraries=cbc_libs,
                          include_dirs=sage_include_directories() + cbc_include_dirs,
-                         library_dirs=cbc_library_dirs)
+                         library_dirs=cbc_library_dirs,
+                         extra_compile_args=['-std=c++11'])
     ]
 
 setup(

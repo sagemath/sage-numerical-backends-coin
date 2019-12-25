@@ -10,6 +10,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - cxx-compiler
   - python=3
   - sage>=8.9
   - pip

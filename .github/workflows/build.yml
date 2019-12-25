@@ -25,9 +25,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install SageMath and CBC
       run: |
-        sudo apt install sagemath coinor-cbc
+        sudo apt-get update
+        sudo apt-get install sagemath coinor-cbc
     - name: Test package
       run: |
         sage --version
         python3 setup.py test
-

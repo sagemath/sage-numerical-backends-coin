@@ -33,4 +33,4 @@ jobs:
     - name: Test package
       run: |
         sage --version
-        python3 setup.py test
+        sage setup.py test

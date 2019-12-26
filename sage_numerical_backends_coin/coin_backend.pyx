@@ -673,69 +673,105 @@ cdef class CoinBackend(GenericBackend):
         return (lb[i] if lb[i] != - self.si.getInfinity() else None,
                 ub[i] if ub[i] != + self.si.getInfinity() else None)
 
-    cpdef add_col(self, indices, coeffs):
-        r"""
-        Adds a column.
+    IF HAVE_ADD_COL_UNTYPED_ARGS:
+        cpdef add_col(self, indices, coeffs):
+            r"""
+            Adds a column.
 
-        INPUT:
+            INPUT:
 
-        - ``indices`` (list of integers) -- this list contains the
-          indices of the constraints in which the variable's
-          coefficient is nonzero
+            - ``indices`` (list of integers) -- this list contains the
+              indices of the constraints in which the variable's
+              coefficient is nonzero
 
-        - ``coeffs`` (list of real values) -- associates a coefficient
-          to the variable in each of the constraints in which it
-          appears. Namely, the ith entry of ``coeffs`` corresponds to
-          the coefficient of the variable in the constraint
-          represented by the ith entry in ``indices``.
+            - ``coeffs`` (list of real values) -- associates a coefficient
+              to the variable in each of the constraints in which it
+              appears. Namely, the ith entry of ``coeffs`` corresponds to
+              the coefficient of the variable in the constraint
+              represented by the ith entry in ``indices``.
 
-        .. NOTE::
+            .. NOTE::
 
-            ``indices`` and ``coeffs`` are expected to be of the same
-            length.
+                ``indices`` and ``coeffs`` are expected to be of the same
+                length.
 
-        EXAMPLES::
+            EXAMPLES::
 
-            sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
-            sage: p = CoinBackend()
-            sage: p.ncols()
-            0
-            sage: p.nrows()
-            0
-            sage: p.add_linear_constraints(5, 0, None)
-            sage: p.add_col(list(range(5)), list(range(5)))
-            sage: p.nrows()
-            5
-        """
+                sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
+                sage: p = CoinBackend()
+                sage: p.ncols()
+                0
+                sage: p.nrows()
+                0
+                sage: p.add_linear_constraints(5, 0, None)
+                sage: p.add_col(list(range(5)), list(range(5)))
+                sage: p.nrows()
+                5
+            """
 
-        cdef list list_indices
-        cdef list list_coeffs
+            cdef list list_indices
+            cdef list list_coeffs
 
-        if type(indices) is not list:
-            list_indices = list(indices)
-        else:
-            list_indices = <list>indices
+            if type(indices) is not list:
+                list_indices = list(indices)
+            else:
+                list_indices = <list>indices
 
-        if type(coeffs) is not list:
-            list_coeffs = list(coeffs)
-        else:
-            list_coeffs = <list>coeffs
+            if type(coeffs) is not list:
+                list_coeffs = list(coeffs)
+            else:
+                list_coeffs = <list>coeffs
 
-        cdef int n = len(list_indices)
-        cdef int * c_indices = <int*>check_malloc(n*sizeof(int))
-        cdef double * c_values  = <double*>check_malloc(n*sizeof(double))
-        cdef int i
+            cdef int n = len(list_indices)
+            cdef int * c_indices = <int*>check_malloc(n*sizeof(int))
+            cdef double * c_values  = <double*>check_malloc(n*sizeof(double))
+            cdef int i
 
-        for 0<= i< n:
-            c_indices[i] = list_indices[i]
-            c_values[i] = list_coeffs[i]
+            for 0<= i< n:
+                c_indices[i] = list_indices[i]
+                c_values[i] = list_coeffs[i]
 
-        self.si.addCol (n, c_indices, c_values, 0, self.si.getInfinity(), 0)
+            self.si.addCol (n, c_indices, c_values, 0, self.si.getInfinity(), 0)
 
-        self.col_names.append("")
-        sig_free(c_indices)
-        sig_free(c_values)
+            self.col_names.append("")
+            sig_free(c_indices)
+            sig_free(c_values)
+    ELSE:
+        cpdef add_col(self, list list_indices, list list_coeffs):
+            r"""
+            Adds a column.
 
+            INPUT:
+
+            - ``indices`` (list of integers) -- this list contains the
+              indices of the constraints in which the variable's
+              coefficient is nonzero
+
+            - ``coeffs`` (list of real values) -- associates a coefficient
+              to the variable in each of the constraints in which it
+              appears. Namely, the ith entry of ``coeffs`` corresponds to
+              the coefficient of the variable in the constraint
+              represented by the ith entry in ``indices``.
+
+            .. NOTE::
+
+                ``indices`` and ``coeffs`` are expected to be of the same
+                length.
+            """
+            cdef int n = len(list_indices)
+            cdef int * c_indices = <int*>check_malloc(n*sizeof(int))
+            cdef double * c_values  = <double*>check_malloc(n*sizeof(double))
+            cdef int i
+
+            for 0<= i< n:
+                c_indices[i] = list_indices[i]
+                c_values[i] = list_coeffs[i]
+
+            self.si.addCol (n, c_indices, c_values, 0, self.si.getInfinity(), 0)
+
+            self.col_names.append("")
+            sig_free(c_indices)
+            sig_free(c_values)
 
     cpdef int solve(self) except -1:
         r"""

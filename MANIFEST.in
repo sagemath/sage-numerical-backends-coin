@@ -1,3 +1,4 @@
 include LICENSE
 include VERSION
+include *.pyx
 include sage_numerical_backends_coin/*.pyx

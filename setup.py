@@ -8,8 +8,8 @@ import sys
 from setuptools import setup
 from setuptools import Extension
 from setuptools.command.test import test as TestCommand # for tests
-from distutils.errors import CompileError
 from Cython.Build import cythonize
+from Cython.Compiler.Errors import CompileError
 from codecs import open # To open the README file with proper encoding
 from sage.env import sage_include_directories
 

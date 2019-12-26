@@ -32,8 +32,9 @@ from cysignals.signals cimport sig_on, sig_off
 from sage.numerical.mip import MIPSolverException
 from copy import copy
 
-from sage.cpython.string cimport str_to_bytes
-from sage.cpython.string import FS_ENCODING
+IF HAVE_SAGE_CPYTHON_STRING:
+    from sage.cpython.string cimport str_to_bytes
+    from sage.cpython.string import FS_ENCODING
 from sage.parallel.ncpus import ncpus
 
 
@@ -1114,7 +1115,8 @@ cdef class CoinBackend(GenericBackend):
         """
 
         cdef char * mps = "mps"
-        filename = str_to_bytes(filename, FS_ENCODING, 'surrogateescape')
+        IF HAVE_SAGE_CPYTHON_STRING:
+            filename = str_to_bytes(filename, FS_ENCODING, 'surrogateescape')
         self.si.writeMps(filename, mps, -1 if self.is_maximization() else 1)
 
     cpdef write_lp(self, filename):
@@ -1137,7 +1139,8 @@ cdef class CoinBackend(GenericBackend):
         """
 
         cdef char * lp = "lp"
-        filename = str_to_bytes(filename, FS_ENCODING, 'surrogateescape')
+        IF HAVE_SAGE_CPYTHON_STRING:
+            filename = str_to_bytes(filename, FS_ENCODING, 'surrogateescape')
         self.si.writeLp(filename, lp, 0.00001, 10, 5, -1 if self.is_maximization() else 1, 1)
 
     cpdef problem_name(self, name=None):

@@ -44,6 +44,17 @@ ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
                          extra_compile_args=['-std=c++11'])
     ]
 
+
+## SageMath 8.1 (included in Ubuntu bionic 18.04 LTS) does not have sage.cpython.string;
+## it was introduced in 8.2.
+compile_time_env = {'HAVE_SAGE_CPYTHON_STRING': False}
+
+try:
+    import sage.cpython.string
+    compile_time_env['HAVE_SAGE_CPYTHON_STRING'] = True
+except ImportError:
+    pass
+
 setup(
     name="sage_numerical_backends_coin",
     version=readfile("VERSION").strip(),
@@ -68,7 +79,8 @@ setup(
                  'Programming Language :: Python :: 3.6',
                  'Programming Language :: Python :: 3.7',
                  ],
-    ext_modules = cythonize(ext_modules, include_path=sys.path),
+    ext_modules = cythonize(ext_modules, include_path=sys.path,
+                            compile_time_env=compile_time_env),
     cmdclass = {'test': SageTest}, # adding a special setup command for tests
     keywords=['milp', 'linear-programming', 'optimization'],
     packages=['sage_numerical_backends_coin'],

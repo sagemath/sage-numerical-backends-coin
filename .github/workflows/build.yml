@@ -3,7 +3,7 @@ name: Build and test Python package
 on: [push]
 
 jobs:
-  build_docker:
+  build_docker_prereq:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -11,8 +11,17 @@ jobs:
       with:
         username: "${{ secrets.DOCKER_USERNAME }}"
         password: "${{ secrets.DOCKER_PASSWORD }}"
-        image_name: "${{ secrets.DOCKER_USERNAME }}/sagemath-conda-coinor"
-  build:
+        image_name: "${{ secrets.DOCKER_USERNAME }}/conda-sagemath-coinor"
+  docker_build_and_test:
+    needs: [build_docker_prereq]
+    container: "${{ secrets.DOCKER_USERNAME }}/conda-sagemath-coinor"
+    steps:
+      - uses: actions/checkout@v1
+      - name: Test package
+        run: |
+          sage --version
+          python3 setup.py test
+  conda_build_and_test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -31,7 +40,7 @@ jobs:
       run: |
         sage --version
         python3 setup.py test
-  build_with_ubuntu_sage:
+  ubuntu_sagemath_build_and_test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1

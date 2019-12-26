@@ -20,6 +20,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Test package
         run: |
+          conda activate -n sagecoin
           sage --version
           python3 setup.py test
   conda_build_and_test:

@@ -15,4 +15,5 @@ dependencies:
   - sage>=8.9
   - pip
   - pkgconfig
+  - setuptools
   - coincbc

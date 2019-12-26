@@ -15,7 +15,7 @@ from sage.env import sage_include_directories
 # For the tests
 class SageTest(TestCommand):
     def run_tests(self):
-        errno = os.system("sage -t --force-lib sage_numerical_backends_coin")
+        errno = os.system("PYTHONPATH=`pwd` sage -t --force-lib sage_numerical_backends_coin")
         if errno != 0:
             sys.exit(1)
 

@@ -8,6 +8,7 @@ import sys
 from setuptools import setup
 from setuptools import Extension
 from setuptools.command.test import test as TestCommand # for tests
+from distutils.errors import CompileError
 from Cython.Build import cythonize
 from codecs import open # To open the README file with proper encoding
 from sage.env import sage_include_directories
@@ -64,6 +65,8 @@ try:
     compile_time_env['HAVE_ADD_COL_UNTYPED_ARGS'] = True
 except CompileError:
     pass
+
+print("Using compile_time_env: {}".format(compile_time_env), file=sys.stderr)
 
 setup(
     name="sage_numerical_backends_coin",

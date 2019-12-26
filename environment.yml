@@ -11,7 +11,7 @@ channels:
   - defaults
 dependencies:
   - cxx-compiler
-  - python=3
+  - python=3.7.3     # fixed to avoid https://github.com/ContinuumIO/anaconda-issues/issues/11195
   - sage>=8.9
   - pip
   - pkgconfig

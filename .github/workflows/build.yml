@@ -14,6 +14,7 @@ jobs:
         image_name: "mkoeppe/conda-sagemath-coinor"
   docker_build_and_test:
     needs: [build_docker_prereq]
+    runs-on: ubuntu-latest
     container: "mkoeppe/conda-sagemath-coinor"
     steps:
       - uses: actions/checkout@v1

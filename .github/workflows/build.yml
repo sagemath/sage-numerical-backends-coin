@@ -3,6 +3,14 @@ name: Build and test Python package
 on: [push]
 
 jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: whoan/docker-build-with-cache-action@v2
+      with:
+        username: "${{ secrets.DOCKER_USERNAME }}"
+        password: "${{ secrets.DOCKER_PASSWORD }}"
+        image_name: "${{ secrets.DOCKER_USERNAME }}/sagemath-conda-coinor"
   build:
     runs-on: ${{ matrix.os }}
     strategy:

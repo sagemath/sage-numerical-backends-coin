@@ -1258,7 +1258,7 @@ cdef class CoinBackend(GenericBackend):
               ``NULL`` (default), the method returns the problem's name.
 
             """
-            if name is None:
+            if name == NULL:
                 if self.prob_name is not None:
                     return self.prob_name
                 else:

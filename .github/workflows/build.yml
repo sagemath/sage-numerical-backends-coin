@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Test package
+        shell: bash -l {0}
         run: |
           conda activate -n sagecoin
           sage --version

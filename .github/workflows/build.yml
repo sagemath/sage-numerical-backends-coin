@@ -75,3 +75,28 @@ jobs:
       run: |
         sudo sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'
         sage -c 'B = MixedIntegerLinearProgram().get_backend(); print(B); assert type(B).__module__ == "sage_numerical_backends_coin.coin_backend", "Patching in the new backend did not work"'
+  docker_ubuntu_sagemath_build_and_test:
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container: [ ubuntu:disco, ubuntu:rolling, ubuntu:devel, debian:oldstable, debian:stable, debian:unstable ]
+    steps:
+    - name: Install SageMath and CBC
+      run: |
+        sudo DEBIAN_FRONTEND=noninteractive apt-get update
+        sudo DEBIAN_FRONTEND=noninteractive apt-get install sagemath coinor-cbc coinor-libcbc-dev python-pkgconfig python-setuptools python-sphinx cython
+    - name: Show package info
+      run: |
+        pip list
+    - name: Test package
+      run: |
+        sage --version
+        sage setup.py test
+    - name: Install package
+      run: |
+        SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install --no-dependencies -v -v .
+    - name: Patch in
+      run: |
+        sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'
+        sage -c 'B = MixedIntegerLinearProgram().get_backend(); print(B); assert type(B).__module__ == "sage_numerical_backends_coin.coin_backend", "Patching in the new backend did not work"'

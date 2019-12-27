@@ -82,6 +82,7 @@ jobs:
       matrix:
         container: [ "ubuntu:disco", "ubuntu:devel", "debian:oldstable", "debian:stable", "debian:unstable" ]
     steps:
+    - uses: actions/checkout@v1
     - name: Install SageMath and CBC
       run: |
         DEBIAN_FRONTEND=noninteractive apt-get update

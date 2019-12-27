@@ -85,7 +85,7 @@ jobs:
     - name: Install SageMath and CBC
       run: |
         DEBIAN_FRONTEND=noninteractive apt-get update
-        DEBIAN_FRONTEND=noninteractive apt-get --yes install sagemath coinor-cbc coinor-libcbc-dev cython
+        DEBIAN_FRONTEND=noninteractive apt-get --yes install sagemath coinor-cbc coinor-libcbc-dev cython pip
     - name: Show package info
       run: |
         pip list

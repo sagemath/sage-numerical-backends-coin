@@ -80,7 +80,7 @@ jobs:
     container: ${{ matrix.container }}
     strategy:
       matrix:
-        container: [ ubuntu:disco, ubuntu:rolling, ubuntu:devel, debian:oldstable, debian:stable, debian:unstable ]
+        container: [ "ubuntu:disco", "ubuntu:rolling", "ubuntu:devel", "debian:oldstable", "debian:stable", "debian:unstable" ]
     steps:
     - name: Install SageMath and CBC
       run: |

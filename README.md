@@ -25,15 +25,11 @@ This package finds the CBC installation by means of ``pkgconfig``.
 
 Install this package from PyPI using
 
-    $ sage -pip install sage-numerical-backends-coin
+    $ sage -python -m pip install sage-numerical-backends-coin
 
 or from GitHub using
 
-    $ sage -pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
-
-Installation in Ubuntu bionic:
-
-    $ SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
+    $ sage -python -m pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
 
 ## Using this package
 

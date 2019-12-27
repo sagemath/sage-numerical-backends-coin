@@ -33,7 +33,7 @@ or from GitHub using
 
 Installation in Ubuntu bionic:
 
-    $ SAGE_LOCAL=/usr pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
+    $ SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
 
 ## Using this package
 

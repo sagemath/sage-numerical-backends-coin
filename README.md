@@ -67,12 +67,12 @@ To patch this in permanently (at your own risk):
 
     $ sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'
 
-Or use the script in the source distribution that does the same:
+Or use the script [`patch_into_sage_module.py`](patch_into_sage_module.py) in the source distribution that does the same:
 
-    $ sage patch_into_sage_module.py
+    $ sage -c 'load("patch_into_sage_module.py")'
     Success: Patched in the module as sage.numerical.backends.coin_backend
 
-Verify that the script has worked:
+Verify with [`check_get_solver_with_name.py`](check_get_solver_with_name.py) that the patching script has worked:
 
-    $ sage check_get_solver_with_name.py
+    $ sage -c 'load("check_get_solver_with_name.py")'
     Success: get_solver(solver='coin') gives <sage_numerical_backends_coin.coin_backend.CoinBackend object at 0x7f8f20218528>

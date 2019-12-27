@@ -50,8 +50,8 @@ jobs:
     - name: Patch in, run parts of the Sage testsuite
       shell: bash -l {0}
       run: |
-        sage patch_into_sage_module.py
-        sage check_get_solver_with_name.py
+        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        sage -c 'load("check_get_solver_with_name.py")'
         (cd $(sage -c 'print(sage.env.SAGE_LIB)') && cd sage && sage -t -p graphs/ sat/ geometry/polyhedron/base.py geometry/cone.py homology/simplicial_complex.py knots/ matroids/ coding/ game_theory/ numerical/*.py* combinat/designs/ combinat/integer_vector.py combinat/posets/) || true
   ubuntu_sagemath_build_and_test:
     runs-on: ubuntu-latest
@@ -99,5 +99,5 @@ jobs:
         SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install --no-dependencies -v -v .
     - name: Patch in
       run: |
-        sage patch_into_sage_module.py
-        sage check_get_solver_with_name.py
+        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        sage -c 'load("check_get_solver_with_name.py")'

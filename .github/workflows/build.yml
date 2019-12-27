@@ -92,7 +92,7 @@ jobs:
     - name: Install SageMath and CBC
       run: |
         DEBIAN_FRONTEND=noninteractive apt-get update
-        DEBIAN_FRONTEND=noninteractive apt-get --yes install sagemath coinor-cbc coinor-libcbc-dev cython g++ python-pip python3-pip libpari-dev
+        DEBIAN_FRONTEND=noninteractive apt-get --yes install sagemath coinor-cbc coinor-libcbc-dev coinor-libcgl-dev  coinor-libclp-dev cython g++ python-pip python3-pip libpari-dev
     - name: Show package info
       run: |
         sage -python -m pip list

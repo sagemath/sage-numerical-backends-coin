@@ -67,6 +67,7 @@ jobs:
         sage setup.py test
     - name: Install package
       run: |
+        pip list
         SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install .
     - name: Patch in
       run: |

@@ -31,6 +31,10 @@ or from GitHub using
 
     $ sage -pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
 
+Installation in Ubuntu bionic:
+
+    $ SAGE_LOCAL=/usr pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
+
 ## Using this package
 
 To obtain a solver (backend) instance:

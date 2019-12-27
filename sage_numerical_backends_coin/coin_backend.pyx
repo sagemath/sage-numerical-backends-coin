@@ -86,6 +86,12 @@ cdef class CoinBackend(GenericBackend):
         del self.model
         del self.si
 
+    def __reduce__(self):
+        r"""
+        Explicitly disallows pickling for backend instances.
+        """
+        raise NotImplementedError("__reduce__ not implemented for %s" % type(self))
+
     cpdef int add_variable(self, lower_bound=0.0, upper_bound=None, binary=False, continuous=False, integer=False, obj=0.0, name=None) except -1:
         r"""
         Add a variable.

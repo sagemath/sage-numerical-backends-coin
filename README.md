@@ -1,9 +1,9 @@
 # sage-numerical-backends-coin: COIN-OR mixed integer linear programming backend for SageMath
 
-![PyPI](https://img.shields.io/pypi/v/sage-numerical-backends-coin)
-![GitHub Workflow Status](https://github.com/mkoeppe/sage-numerical-backends-coin/workflows/Build%20and%20test%20Python%20package/badge.svg)
+[![PyPI](https://img.shields.io/pypi/v/sage-numerical-backends-coin)](https://pypi.org/project/sage-numerical-backends-coin/ "PyPI: sage-numerical-backends-coin")
+[![GitHub Workflow Status](https://github.com/mkoeppe/sage-numerical-backends-coin/workflows/Build%20and%20test%20Python%20package/badge.svg)](https://github.com/mkoeppe/sage-numerical-backends-coin/actions "GitHub Actions: sage-numerical-backends-coin")
 
-CoinBackend has previously been available as part of the SageMath source tree,
+CoinBackend has previously been available as part of the [SageMath](http://www.sagemath.org/) source tree,
 from which it is built as an "optional extension" when then cbc Sage package is installed.
 
 However, it is not available in binary distributions such as:
@@ -50,7 +50,7 @@ Equivalently:
     sage: get_solver(solver=CoinBackend)
     <sage_numerical_backends_coin.coin_backend.CoinBackend object at 0x7fe21ffbe2b8>
 
-To use this solver (backend) with `MixedIntegerLinearProgram`:
+To use this solver (backend) with [`MixedIntegerLinearProgram`](http://doc.sagemath.org/html/en/reference/numerical/sage/numerical/mip.html):
 
     sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
     sage: M = MixedIntegerLinearProgram(solver=CoinBackend)

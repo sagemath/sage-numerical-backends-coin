@@ -65,4 +65,4 @@ Setting it as the default backend for `MixedIntegerLinearProgram`, as of SageMat
 
 To patch this in permanently (at your own risk):
 
-    $ sage -c 'import os, sysconfig, sage.env; f = "coin_backend" + sysconfig.get_config_var("EXT_SUFFIX"); d = os.path.join(sage.env.SAGE_LIB, "sage", "numerical", "backends", f); s = os.path.join("..", "..", "..", "sage_numerical_backends_coin", f); os.path.exists(d) and os.path.remove(d); os.symlink(s, d);'
+    $ sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'

@@ -84,8 +84,8 @@ jobs:
     steps:
     - name: Install SageMath and CBC
       run: |
-        sudo DEBIAN_FRONTEND=noninteractive apt-get update
-        sudo DEBIAN_FRONTEND=noninteractive apt-get install sagemath coinor-cbc coinor-libcbc-dev python-pkgconfig python-setuptools python-sphinx cython
+        DEBIAN_FRONTEND=noninteractive apt-get update
+        DEBIAN_FRONTEND=noninteractive apt-get install sagemath coinor-cbc coinor-libcbc-dev python-pkgconfig python-setuptools python-sphinx cython
     - name: Show package info
       run: |
         pip list

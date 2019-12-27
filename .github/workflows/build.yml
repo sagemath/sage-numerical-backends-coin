@@ -61,13 +61,15 @@ jobs:
       run: |
         sudo DEBIAN_FRONTEND=noninteractive apt-get update
         sudo DEBIAN_FRONTEND=noninteractive apt-get install sagemath coinor-cbc coinor-libcbc-dev python-pkgconfig python-setuptools python-sphinx cython
+    - name: Show package info
+      run: |
+        pip list
     - name: Test package
       run: |
         sage --version
         sage setup.py test
     - name: Install package
       run: |
-        pip list
         SAGE_LOCAL=/usr SAGE_ROOT=$(sage -root) pip install -v -v .
     - name: Patch in
       run: |

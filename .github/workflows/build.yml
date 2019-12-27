@@ -24,6 +24,25 @@ jobs:
           conda activate sagecoin
           sage --version
           python3 setup.py test
+  homebrew_build_and_test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install homebrew cbc and sage
+        run: |
+          brew cask install sage
+          brew install cbc
+      - name: Test package
+        run: |
+          sage --version
+          sage setup.py test
+      - name: Install package
+        run: |
+          sage -python -m pip install --no-dependencies -v -v .
+      - name: Patch in
+        run: |
+          sudo sage patch_into_sage_module.py
+          sage check_get_solver_with_name.py
   conda_build_and_test:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -86,7 +105,7 @@ jobs:
     strategy:
       matrix:
         # debian:oldstable = stretch only has Sage 7.4, too old.
-        container: [ "ubuntu:disco", "ubuntu:devel", "debian:oldstable", "debian:stable", "debian:unstable" ]
+        container: [ "ubuntu:disco", "ubuntu:devel", "debian:stable", "debian:unstable" ]
     steps:
     - uses: actions/checkout@v1
     - name: Install SageMath and CBC

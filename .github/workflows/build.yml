@@ -51,7 +51,7 @@ jobs:
       shell: bash -l {0}
       run: |
         sage -c 'import os, sysconfig, sage.env; f = "coin_backend" + sysconfig.get_config_var("EXT_SUFFIX"); d = os.path.join(sage.env.SAGE_LIB, "sage", "numerical", "backends", f); s = os.path.join("..", "..", "..", "sage_numerical_backends_coin", f); os.path.exists(d) and os.path.remove(d); os.symlink(s, d);'
-        sage -c 'B = MixedIntegerLinearProgram().get_backend(); print(B); assert type(B).__module__ == "sage_numerical_backends_coin.coin_backend, "Patching in the new backend did not work"'
+        sage -c 'B = MixedIntegerLinearProgram().get_backend(); print(B); assert type(B).__module__ == "sage_numerical_backends_coin.coin_backend", "Patching in the new backend did not work"'
         (cd $(sage -c 'print(sage.env.SAGE_LIB)') && cd sage && sage -t -p graphs/ sat/ geometry/polyhedron/base.py geometry/cone.py homology/simplicial_complex.py knots/ matroids/ coding/ game_theory/ numerical/*.py* combinat/designs/ combinat/integer_vector.py combinat/posets/) || true
   ubuntu_sagemath_build_and_test:
     runs-on: ubuntu-latest

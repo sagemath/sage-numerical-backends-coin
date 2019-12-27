@@ -3,3 +3,4 @@ include VERSION
 include *.pyx
 include sage_numerical_backends_coin/*.pyx
 exclude sage_numerical_backends_coin/*.cpp
+include *.py

@@ -5,7 +5,7 @@ from which it is built as an "optional extension" when then cbc Sage package is 
 
 However, it is not available in binary distributions such as:
 - the Sage binary distribution (which does not package any optional packages),
-- Ubuntu (bionic 18.04LTS ships SageMath 8.1, without any optional packages),
+- Ubuntu (bionic 18.04LTS ships SageMath 8.1, with various optional packages including CBC, but not the optional extension module CoinBackend),
 - conda-forge (which ships SageMath and CBC but not the optional extension).
 
 The present standalone Python package `sage-numerical-backends-coin` has been created from the SageMath sources, version 9.0.beta10.  It can be installed on top of various Sage installations using pip, including older versions of Sage such as 8.1 (as shipped by Ubuntu bionic).

@@ -99,7 +99,7 @@ setup(
     packages=['sage_numerical_backends_coin'],
     package_dir={'sage_numerical_backends_coin': 'sage_numerical_backends_coin'},
     package_data={'sage_numerical_backends_coin': ['*.pxd']},
-    install_requires = ['sage>=8', 'sage-package', 'sphinx'],
+    install_requires = ['sage>=8', 'sphinx'],
     setup_requires   = ['pkgconfig'],
 
 )

@@ -65,3 +65,10 @@ jobs:
       run: |
         sage --version
         sage setup.py test
+    - name: Install package
+      run: |
+        SAGE_LOCAL=/usr pip install .
+    - name: Patch in
+      run: |
+        sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'
+        sage -c 'B = MixedIntegerLinearProgram().get_backend(); print(B); assert type(B).__module__ == "sage_numerical_backends_coin.coin_backend", "Patching in the new backend did not work"'

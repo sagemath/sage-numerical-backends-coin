@@ -50,7 +50,12 @@ jobs:
     - name: Patch in, run parts of the Sage testsuite
       shell: bash -l {0}
       run: |
-        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        # On Ubuntu, the following fails:
+        #   sage patch_into_sage_module.py
+        #   sage -python patch_into_sage_module.py
+        # with ImportError: No module named coin_backend.
+        # Hence we workaround as follows.
+        sage -c 'load("patch_into_sage_module.py")'
         sage -c 'load("check_get_solver_with_name.py")'
         (cd $(sage -c 'print(sage.env.SAGE_LIB)') && cd sage && sage -t -p graphs/ sat/ geometry/polyhedron/base.py geometry/cone.py homology/simplicial_complex.py knots/ matroids/ coding/ game_theory/ numerical/*.py* combinat/designs/ combinat/integer_vector.py combinat/posets/) || true
   ubuntu_sagemath_build_and_test:
@@ -80,6 +85,7 @@ jobs:
     container: ${{ matrix.container }}
     strategy:
       matrix:
+        # debian:oldstable = stretch only has Sage 7.4, too old.
         container: [ "ubuntu:disco", "ubuntu:devel", "debian:oldstable", "debian:stable", "debian:unstable" ]
     steps:
     - uses: actions/checkout@v1

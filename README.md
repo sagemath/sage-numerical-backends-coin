@@ -1,7 +1,7 @@
 # sage-numerical-backends-coin: COIN-OR mixed integer linear programming backend for SageMath
 
 ![PyPI](https://img.shields.io/pypi/v/sage-numerical-backends-coin)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mkoeppe/sage-numerical-backends-coin/Build%20and%20test%20Python package)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/mkoeppe/sage-numerical-backends-coin/Build%20and%20test%20Python%20package)
 
 CoinBackend has previously been available as part of the SageMath source tree,
 from which it is built as an "optional extension" when then cbc Sage package is installed.

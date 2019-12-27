@@ -16,7 +16,10 @@ from sage.env import sage_include_directories
 # For the tests
 class SageTest(TestCommand):
     def run_tests(self):
-        errno = os.system("PYTHONPATH=`pwd` sage -t --force-lib sage_numerical_backends_coin")
+        # Passing optional=all avoids using sage.misc.package.list_packages,
+        # which gives an error on Debian unstable as of 2019-12-27:
+        # FileNotFoundError: [Errno 2] No such file or directory: '/usr/share/sagemath/build/pkgs'
+        errno = os.system("PYTHONPATH=`pwd` sage -t --force-lib --optional=all sage_numerical_backends_coin")
         if errno != 0:
             sys.exit(1)
 

@@ -51,16 +51,20 @@ ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
 compile_time_env = {'HAVE_SAGE_CPYTHON_STRING': False,
                     'HAVE_ADD_COL_UNTYPED_ARGS': False}
 
+print("Checking whether HAVE_SAGE_CPYTHON_STRING...", file=sys.stderr)
 try:
     import sage.cpython.string
     compile_time_env['HAVE_SAGE_CPYTHON_STRING'] = True
 except ImportError:
     pass
+
 ## SageMath 8.7 changed the signature of add_col.
+print("Checking whether HAVE_ADD_COL_UNTYPED_ARGS...", file=sys.stderr)
 try:
     cythonize(Extension('check_add_col_untyped_args',
                         sources=['check_add_col_untyped_args.pyx'],
                         include_dirs=sage_include_directories()),
+              quiet=True,
               include_path=sys.path)
     compile_time_env['HAVE_ADD_COL_UNTYPED_ARGS'] = True
 except CompileError:

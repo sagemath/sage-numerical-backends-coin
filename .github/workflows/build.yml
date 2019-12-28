@@ -64,16 +64,17 @@ jobs:
         python3 setup.py test
     - name: Install package
       shell: bash -l {0}
+      # sage -pip does not work on Ubuntu bionic
       run: |
-        sage -python -m pip install .          # sage -pip does not work on Ubuntu bionic
+        sage -python -m pip install .
     - name: Patch in, run parts of the Sage testsuite
       shell: bash -l {0}
-      run: |
         # On Ubuntu, the following fails:
         #   sage patch_into_sage_module.py
         #   sage -python patch_into_sage_module.py
         # with ImportError: No module named coin_backend.
         # Hence we workaround as follows.
+      run: |
         sage -c 'load("patch_into_sage_module.py")'
         sage -c 'load("check_get_solver_with_name.py")'
         (cd $(sage -c 'print(sage.env.SAGE_LIB)') && cd sage && sage -t -p graphs/ sat/ geometry/polyhedron/base.py geometry/cone.py homology/simplicial_complex.py knots/ matroids/ coding/ game_theory/ numerical/*.py* combinat/designs/ combinat/integer_vector.py combinat/posets/) || true
@@ -123,8 +124,9 @@ jobs:
       run: |
         sage -python -m pip install --no-dependencies -v -v .
     - name: Patch in
+      # The following works, but "sage patch_into_sage_module.py" fails
       run: |
-        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        sage -c 'load("patch_into_sage_module.py")'
         sage -c 'load("check_get_solver_with_name.py")'
   docker_fedora_sagemath_build_and_test:
     runs-on: ubuntu-latest
@@ -158,5 +160,5 @@ jobs:
         sage -python -m pip install --no-dependencies -v -v .
     - name: Patch in
       run: |
-        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        sage -c 'load("patch_into_sage_module.py")'
         sage -c 'load("check_get_solver_with_name.py")'

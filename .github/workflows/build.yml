@@ -136,7 +136,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install SageMath and CBC
       run: |
-        yum install -y sagemath coin-or-Cbc-devel python-pip pkg-config python-pkgconfig python3-cysignals-devel gcc-c++
+        yum install -y sagemath coin-or-Cbc-devel python-pip pkg-config python-pkgconfig python3-cysignals-devel gcc-c++ pari-devel
     - name: Show package info
       run: |
         sage -python -m pip list

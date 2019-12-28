@@ -35,10 +35,10 @@ jobs:
       - name: Test package
         run: |
           sage --version
-          sage setup.py test
+          PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ sage setup.py test
       - name: Install package
         run: |
-          sage -python -m pip install --no-dependencies -v -v .
+          PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ sage -python -m pip install --no-dependencies -v -v .
       - name: Patch in
         run: |
           sage patch_into_sage_module.py
@@ -151,5 +151,3 @@ jobs:
       run: |
         sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
         sage -c 'load("check_get_solver_with_name.py")'
-
-

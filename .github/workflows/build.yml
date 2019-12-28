@@ -126,3 +126,30 @@ jobs:
       run: |
         sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
         sage -c 'load("check_get_solver_with_name.py")'
+  docker_fedora_sagemath_build_and_test:
+    runs-on: ubuntu-latest
+    container: ${{ matrix.container }}
+    strategy:
+      matrix:
+        container: [ fedora:latest ]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install SageMath and CBC
+      run: |
+        yum install -y sagemath
+    - name: Show package info
+      run: |
+        sage -python -m pip list
+    - name: Test package
+      run: |
+        sage --version
+        sage setup.py test
+    - name: Install package
+      run: |
+        sage -python -m pip install --no-dependencies -v -v .
+    - name: Patch in
+      run: |
+        sage -c 'load("patch_into_sage_module.py")'       # this works, but sage "patch_into_sage_module.py" fails
+        sage -c 'load("check_get_solver_with_name.py")'
+
+

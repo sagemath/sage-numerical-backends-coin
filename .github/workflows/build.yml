@@ -31,7 +31,7 @@ jobs:
       - name: Install homebrew cbc and sage
         run: |
           brew cask install sage --no-quarantine
-          brew install coin-or-tools/coinor/cbc
+          brew install pkg-config coin-or-tools/coinor/cbc
       - name: Test package
         run: |
           sage --version

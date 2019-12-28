@@ -135,8 +135,17 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Install SageMath and CBC
+        # Bizarre - the Sage doctester fails if the ipywidgets package is not installed. It is not in Fedora.
+        #   File "/usr/lib64/python3.7/site-packages/sage/doctest/forker.py", line 172, in init_sage
+        #     import sage.repl.ipython_kernel.all_jupyter
+        #   File "/usr/lib64/python3.7/site-packages/sage/repl/ipython_kernel/all_jupyter.py", line 7, in <module>
+        #     from .widgets_sagenb import (input_box, text_control, slider,
+        #   File "/usr/lib64/python3.7/site-packages/sage/repl/ipython_kernel/widgets_sagenb.py", line 30, in <module>
+        #     from ipywidgets.widgets import (IntSlider, IntRangeSlider, FloatSlider,
+        # ModuleNotFoundError: No module named 'ipywidgets'
       run: |
         yum install -y sagemath coin-or-Cbc-devel python-pip pkg-config python-pkgconfig python3-cysignals-devel gcc-c++ pari-devel
+        sage -python -m pip install ipywidgets
     - name: Show package info
       run: |
         sage -python -m pip list

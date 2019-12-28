@@ -131,7 +131,7 @@ jobs:
     container: ${{ matrix.container }}
     strategy:
       matrix:
-        container: [ fedora:latest ]
+        container: [ "fedora:latest" ]
     steps:
     - uses: actions/checkout@v1
     - name: Install SageMath and CBC

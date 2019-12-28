@@ -31,7 +31,12 @@ def readfile(filename):
  # Cython modules
 import pkgconfig
 
-cbc_pc = pkgconfig.parse('cbc')
+try:
+    cbc_pc = pkgconfig.parse('cbc')
+except pkgconfig.PackageNotFoundError:    # exception handling from sage trac #28883 for pkgconfig version 1.5.1
+    from collections import defaultdict
+    cbc_pc = defaultdict(list, {'libraries': ['Cbc']})
+
 if cbc_pc:
     print("Using pkgconfig: {}".format(sorted(cbc_pc.items())), file=sys.stderr)
 cbc_libs = cbc_pc['libraries']

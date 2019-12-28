@@ -143,8 +143,7 @@ jobs:
     - name: Test package
       run: |
         sage --version
-        # Passing no-deps because 'sage' is not known as a pip package to sage.
-        sage setup.py --no-deps test
+        sage setup.py test
     - name: Install package
       run: |
         sage -python -m pip install --no-dependencies -v -v .

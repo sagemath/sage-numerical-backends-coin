@@ -112,7 +112,8 @@ setup(
     packages=['sage_numerical_backends_coin'],
     package_dir={'sage_numerical_backends_coin': 'sage_numerical_backends_coin'},
     package_data={'sage_numerical_backends_coin': ['*.pxd']},
-    install_requires = ['sage>=8', 'sphinx'],
+    install_requires = [# 'sage>=8',    ### On too many distributions, sage is actually not known as a pip package
+                        'sphinx'],
     setup_requires   = ['pkgconfig'],
 
 )

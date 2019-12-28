@@ -30,8 +30,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Install homebrew cbc and sage
         run: |
-          brew cask install sage
-          brew install cbc
+          brew cask install sage --no-quarantine
+          brew install coin-or-tools/coinor/cbc
       - name: Test package
         run: |
           sage --version
@@ -41,7 +41,7 @@ jobs:
           sage -python -m pip install --no-dependencies -v -v .
       - name: Patch in
         run: |
-          sudo sage patch_into_sage_module.py
+          sage patch_into_sage_module.py
           sage check_get_solver_with_name.py
   conda_build_and_test:
     runs-on: ${{ matrix.os }}

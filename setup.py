@@ -44,8 +44,8 @@ cbc_library_dirs = cbc_pc['library_dirs']
 cbc_include_dirs = cbc_pc['include_dirs']
 
 
-ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
-                         sources=[os.path.join('sage_numerical_backends_coin',
+ext_modules = [Extension('sage.numerical.backends.coin_backend',
+                         sources=[os.path.join('sage/numerical/backends',
                                     'coin_backend.pyx')],
                          libraries=cbc_libs,
                          include_dirs=sage_include_directories() + cbc_include_dirs,
@@ -81,7 +81,7 @@ except CompileError:
 print("Using compile_time_env: {}".format(compile_time_env), file=sys.stderr)
 
 setup(
-    name="sage_numerical_backends_coin",
+    name="sage.numerical.backends.coin_backend",
     version=readfile("VERSION").strip(),
     description="COIN-OR backend for Sage MixedIntegerLinearProgram",
     long_description = readfile("README.md"), # get the long description from the README
@@ -109,9 +109,8 @@ setup(
                             compile_time_env=compile_time_env),
     cmdclass = {'test': SageTest}, # adding a special setup command for tests
     keywords=['milp', 'linear-programming', 'optimization'],
-    packages=['sage_numerical_backends_coin'],
-    package_dir={'sage_numerical_backends_coin': 'sage_numerical_backends_coin'},
-    package_data={'sage_numerical_backends_coin': ['*.pxd']},
+    packages=['sage.numerical.backends'],
+    package_data={'sage.numerical.backends': ['*.pxd']},
     install_requires = [# 'sage>=8',    ### On too many distributions, sage is actually not known as a pip package
                         'sphinx'],
     setup_requires   = ['pkgconfig'],

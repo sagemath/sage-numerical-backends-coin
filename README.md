@@ -57,22 +57,3 @@ To use this solver (backend) with [`MixedIntegerLinearProgram`](http://doc.sagem
     sage: M.get_backend()
     <sage_numerical_backends_coin.coin_backend.CoinBackend object at 0x7fb72c2c7868>
 
-Setting it as the default backend for `MixedIntegerLinearProgram`, as of SageMath 9.0.beta10, requires some trickery:
-
-    sage: import sage_numerical_backends_coin.coin_backend as coin_backend, sage.numerical.backends as backends, sys
-    sage: sys.modules['sage.numerical.backends.coin_backend'] = backends.coin_backend = coin_backend
-    sage: default_mip_solver('Coin')
-
-To patch this in permanently (at your own risk):
-
-    $ sage -c 'import os; import sage.numerical.backends as dm; import sage_numerical_backends_coin.coin_backend as sm; s = sm.__file__; f = os.path.basename(s); d = os.path.join(dm.__path__[0], f); (os.path.exists(d) or os.path.lexists(d)) and os.remove(d); os.symlink(s, d);'
-
-Or use the script [`patch_into_sage_module.py`](patch_into_sage_module.py) in the source distribution that does the same:
-
-    $ sage -c 'load("patch_into_sage_module.py")'
-    Success: Patched in the module as sage.numerical.backends.coin_backend
-
-Verify with [`check_get_solver_with_name.py`](check_get_solver_with_name.py) that the patching script has worked:
-
-    $ sage -c 'load("check_get_solver_with_name.py")'
-    Success: get_solver(solver='coin') gives <sage_numerical_backends_coin.coin_backend.CoinBackend object at 0x7f8f20218528>

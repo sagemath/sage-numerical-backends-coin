@@ -68,7 +68,7 @@ the following commands:
 
 If these commands are executed in a Sage session before any `MixedIntegerLinearProgram` is created, then
 the new `'Coin'` solver wins over the `'GLPK'` solver in the selection of the default MIP backend.
-To select the `'Coin'` solver explicitly as the default MIP backend, additional use the following command.
+To select the `'Coin'` solver explicitly as the default MIP backend, additionally use the following command.
 
     sage: default_mip_solver('Coin')
 

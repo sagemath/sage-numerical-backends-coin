@@ -23,6 +23,12 @@ class SageTest(TestCommand):
         if errno != 0:
             sys.exit(1)
 
+class SageTestSage(SageTest):
+    def run_tests(self):
+        errno = os.system("PYTHONPATH=`pwd` sage -c 'load(\"check_sage_testsuite.py\")'")
+        if errno != 0:
+            sys.exit(1)
+
 # Get information from separate files (README, VERSION)
 def readfile(filename):
     with open(filename, encoding='utf-8') as f:
@@ -107,7 +113,7 @@ setup(
                  ],
     ext_modules = cythonize(ext_modules, include_path=sys.path,
                             compile_time_env=compile_time_env),
-    cmdclass = {'test': SageTest}, # adding a special setup command for tests
+    cmdclass = {'test': SageTest, 'check_sage_testsuite': SageTestSage}, # adding a special setup command for tests
     keywords=['milp', 'linear-programming', 'optimization'],
     packages=['sage_numerical_backends_coin'],
     package_dir={'sage_numerical_backends_coin': 'sage_numerical_backends_coin'},

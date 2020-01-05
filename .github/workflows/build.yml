@@ -121,8 +121,7 @@ jobs:
       run: |
         sage -python -m pip install --no-dependencies -v -v .
     - name: Patch in
-      # The following works, but "sage patch_into_sage_module.py" fails
-      run: ./patch_and_check.py
+      run: ./patch_and_check.sh
   docker_fedora_sagemath_build_and_test:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}

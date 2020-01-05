@@ -4,7 +4,9 @@ ARG BASE_IMAGE=mkoeppe/sage_binary-cbc_spkg:latest
 FROM ${BASE_IMAGE}
 ADD . /src
 WORKDIR /src
-RUN sage setup.py test && sage -python -m pip install . && (sage setup.py check_sage_testsuite || echo "Ignoring failures") && ./patch_and_check.sh
+RUN sage setup.py test && sage -python -m pip install .
+RUN (sage setup.py check_sage_testsuite || echo "Ignoring failures")
+RUN ./patch_and_check.sh
 ## Traceback (most recent call last):
 ##   File "/usr/local/opt/sage/sage-8.9/src/bin/sage-runtests", line 179, in <module>
 ##     err = DC.run()

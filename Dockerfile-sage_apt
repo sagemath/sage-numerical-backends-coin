@@ -1,0 +1,5 @@
+FROM ubuntu:latest as ubuntu-sagemath-coinor
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y sagemath python-pkgconfig python-setuptools python-sphinx cython && DEBIAN_FRONTEND=noninteractive apt-get -y clean
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y coinor-cbc coinor-libcbc-dev  && DEBIAN_FRONTEND=noninteractive apt-get clean

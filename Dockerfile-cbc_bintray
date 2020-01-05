@@ -1,0 +1,14 @@
+# -*- Dockerfile -*-
+ARG BASE_IMAGE=mkoeppe/sage_binary:latest
+
+FROM ${BASE_IMAGE}
+ARG COIN_VERSION=master
+ARG COIN_COMPILER=gcc7
+ARG CBC_FILE=Cbc-${COIN_VERSION}-linux-x86_64-${COIN_COMPILER}.tgz
+ARG COIN_PREFIX=/usr/local
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes ca-certificates liblapack3 liblapack-dev libblas-dev && apt-get --yes clean
+RUN curl -L -o /tmp/cbc.tgz "https://bintray.com/coin-or/download/download_file?file_path=${CBC_FILE}" && (cd ${COIN_PREFIX} &&  tar xfz /tmp/cbc.tgz)
+# Fix up bad prefix in installed .pc files
+# see https://gitlab.freedesktop.org/dbus/dbus/commit/216627825dd6fd5675b4c521b8b67b7850d7ad4c
+RUN ldconfig && cd ${COIN_PREFIX}/lib/pkgconfig && sed -i.bak 's|^prefix=/home/travis/.*|prefix=${pcfiledir}/../..|' *.pc && rm -f *.pc.bak

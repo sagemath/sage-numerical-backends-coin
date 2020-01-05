@@ -1,0 +1,16 @@
+# -*- Dockerfile -*-
+## Adapted from https://github.com/tkralphs/optimization-suite-docker/blob/master/image/Dockerfile
+ARG BASE_IMAGE=ubuntu:latest
+FROM ${BASE_IMAGE}
+
+RUN apt-get -y install --no-install-recommends \
+        git subversion gcc g++ make wget gfortran patch pkg-config file \
+        libblas-dev liblapack-dev \
+        ca-certificates
+RUN git clone https://github.com/coin-or/coinbrew /var/coin-or
+WORKDIR /var/coin-or
+RUN ./coinbrew fetch COIN-OR-OptimizationSuite --skip="ThirdParty/Blas ThirdParty/Lapack" --no-prompt
+ARG NUMPROC=8
+RUN ./coinbrew build  COIN-OR-OptimizationSuite  --skip="ThirdParty/Blas ThirdParty/Lapack" --no-prompt --prefix=/usr/local/ --parallel-jobs=${NUMPROC} --test
+WORKDIR /
+RUN ldconfig

@@ -1,0 +1,49 @@
+# -*- Dockerfile -*-
+# docker build . -f Dockerfile-sagemath-binary -t mkoeppe/sagemath-binary --build-arg http_proxy=http://host.docker.internal:3128
+# FIXME: Clean up setup vs. tester images in the 3 repos.
+ARG BASE_IMAGE=ubuntu:latest
+FROM ${BASE_IMAGE} AS sage-run
+
+ARG SAGE_SERVER=http://files.sagemath.org/linux/64bit/
+ARG SAGE_VERSION=9.0
+ARG SAGE_OS=Ubuntu_18.04
+ARG SAGE_ARCH=x86_64
+ARG SAGE_TARNAME=sage-${SAGE_VERSION}-${SAGE_OS}-${SAGE_ARCH}
+ARG SAGE_INSTALL_BASE=/usr/local/opt/sage
+ARG SAGE_INSTALL_DIR=${SAGE_INSTALL_BASE}/sage-${SAGE_VERSION}
+
+# use bsdtar as tar fails sometimes with "Directory renamed before its status could be extracted"
+# This is a known issue with overlayfs: https://github.com/coreos/bugs/issues/1095
+# python is needed for 'relocate-once.py'
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes curl bsdtar python && apt-get --yes clean
+## To run sage, additionally need:
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes \
+        libpng-dev libfreetype6 \
+        && apt-get --yes clean
+# We ignore errors in the first sage start up (which triggers relocate-once.py) so that an intermediate image is created
+# that can be investigated.
+# sagemath binary files comes with uid:gid=999:999, and bsdtar has no --owner=NAME, --group=NAME options.
+RUN curl -o /tmp/SageMath.tar.bz2 ${SAGE_SERVER}/${SAGE_TARNAME}.tar.bz2 && umask 22 && mkdir -p ${SAGE_INSTALL_BASE} && cd ${SAGE_INSTALL_BASE} && bsdtar xf /tmp/SageMath.tar.bz2 && chown -R root:root SageMath && mv SageMath ${SAGE_INSTALL_DIR} && rm -f /tmp/SageMath.tar.bz2 && ln -sf ${SAGE_INSTALL_DIR}/sage /usr/local/bin && (sage  < /dev/null || true)
+
+
+FROM sage-run as sage-build
+
+## To build optional packages, additionally need:
+## (similar to https://doc.sagemath.org/html/en/installation/source.html)
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes \
+        gcc g++ gfortran make m4
+## To build optional package, to avoid installing the following from source, one needs:
+RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --yes \
+        patch pkg-config libfreetype6-dev git
+## Patch away 'cannot build Sage as root' safeguard; see https://trac.sagemath.org/ticket/2890
+## And patch away recompiling of sagelib after installing packages, which rebuilds everything because src/build/lib.... has been nuked
+RUN cd $(sage -sh -c 'echo $SAGE_ROOT')                                         \
+        && for a in configure configure.in m4/ax_check_root.m4; do              \
+               if [ -r $a ]; then sed -i.bak -e 's/id -u/echo 12345/' $a; fi;   \
+           done                                                                 \
+        && for a in src/Makefile src/Makefile.in; do                            \
+               if [ -r $a ]; then                                               \
+                   sed -i.bak -e 's/^sage:/rebuild-sage-lib:/' $a;              \
+                   echo >> $a; echo 'sage:' >> $a;                              \
+               fi;                                                              \
+           done

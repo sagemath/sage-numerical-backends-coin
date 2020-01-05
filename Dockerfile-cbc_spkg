@@ -1,0 +1,28 @@
+# -*- Dockerfile -*-
+ARG BASE_IMAGE=mkoeppe/sage_binary:9.0
+FROM ${BASE_IMAGE}
+
+## ## Install a package from source   ....... this does not work very well.
+ARG NUMPROC=8
+RUN MAKE="make -j${NUMPROC}" sage -i cbc
+## # Above triggers a rebuild of sagelib:
+## # [sagelib-8.9] Building interpreters for fast_callable
+## # [sagelib-8.9] running build_cython
+## # [sagelib-8.9] Enabling Cython debugging support
+## # [sagelib-8.9] Updating Cython code....
+## # [sagelib-8.9] Finished Cythonizing, time: 4.51 seconds.
+## # [sagelib-8.9] creating build/lib.linux-x86_64-2.7/sage
+## # [sagelib-8.9] creating build/lib.linux-x86_64-2.7/sage/libs
+## # [sagelib-8.9] creating build/lib.linux-x86_64-2.7/sage/libs/flint
+## # [sagelib-8.9] copying ./sage/libs/flint/fmpz_mat.pxd -> build/lib.linux-x86_64-2.7/sage/libs/flint
+## # [sagelib-8.9] copying ./sage/libs/flint/fmpz_poly_q.pxd -> build/lib.linux-x86_64-2.7/sage/libs/flint
+## # ...
+## # [sagelib-8.9] running build_ext
+## # [sagelib-8.9] building 'sage.algebras.quatalg.quaternion_algebra_element' extension
+## # [sagelib-8.9] building 'sage.algebras.letterplace.free_algebra_element_letterplace' extension
+## # ...
+## # [sagelib-8.9] creating build/temp.linux-x86_64-2.7/build/cythonized/sage/algebras/quatalg
+## # [sagelib-8.9] gcc -fno-strict-aliasing -g -O2 -DNDEBUG -g -fwrapv -O3 -Wall -Wno-unused -fPIC -I./sage/libs/flint -I./sage/cpython -I./sage/libs/ntl -I/usr/local/opt/sage/sage-8.9/local/include -I/usr/local/opt/sage/sage-8.9/src -I/usr/local/opt/sage/sage-8.9/src/sage/ext -I/usr/local/opt/sage/sage-8.9/local/include/python2.7 -I/usr/local/opt/sage/sage-8.9/local/lib/python2.7/site-packages/numpy/core/include -Ibuild/cythonized -I/usr/local/opt/sage/sage-8.9/local/include/python2.7 -c build/cythonized/sage/algebras/quatalg/quaternion_algebra_element.cpp -o build/temp.linux-x86_64-2.7/build/cythonized/sage/algebras/quatalg/quaternion_algebra_element.o -fno-strict-aliasing -DCYTHON_CLINE_IN_TRACEBACK=1 -std=c++11
+## # ...
+## # [sagelib-8.9] gcc: internal compiler error: Killed (program cc1plus)
+#RUN MAKE="make -j${NUMPROC}" sage -i lrslib

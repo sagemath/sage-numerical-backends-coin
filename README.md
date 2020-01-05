@@ -85,6 +85,19 @@ To run the Sage testsuite with the default MIP solver set to the backend provide
 
     $ sage setup.py check_sage_testsuite
 
+## Running tests with tox
+
+The doctests can also be invoked using `tox`:
+
+    $ tox -e local
+    $ tox -e local-sage_testsuite
+
+If you have `docker` installed, more tests can be run:
+
+    $ tox -e docker-sage_binary-cbc_coinbrew
+
+See `tox.ini` for the available options.
+
 ## Overriding the default solver by patching the Sage installation
 
 Another method is to patch the module in permanently to the sage installation (at your own risk).

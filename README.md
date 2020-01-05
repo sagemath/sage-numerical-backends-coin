@@ -4,7 +4,7 @@
 [![GitHub Workflow Status](https://github.com/mkoeppe/sage-numerical-backends-coin/workflows/Build%20and%20test%20Python%20package/badge.svg)](https://github.com/mkoeppe/sage-numerical-backends-coin/actions "GitHub Actions: sage-numerical-backends-coin")
 
 `CoinBackend` has previously been available as part of the [SageMath](http://www.sagemath.org/) source tree,
-from which it is built as an "optional extension" when then `cbc` Sage package is installed.
+from which it is built as an "optional extension" when the `cbc` Sage package is installed.
 
 However, it is not available in binary distributions such as:
 - the Sage binary distribution (which does not package any optional packages),

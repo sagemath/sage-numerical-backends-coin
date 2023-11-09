@@ -1,8 +1,6 @@
 #! /usr/bin/env python
 ## -*- encoding: utf-8 -*-
 
-from __future__ import print_function
-
 import os
 import sys
 from setuptools import setup
@@ -103,13 +101,16 @@ setup(
                  "Intended Audience :: Science/Research",
                  'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
                  "Programming Language :: Python",
-                 "Programming Language :: Python :: 2",
-                 'Programming Language :: Python :: 2.7',
                  'Programming Language :: Python :: 3',
                  'Programming Language :: Python :: 3.4',
                  'Programming Language :: Python :: 3.5',
                  'Programming Language :: Python :: 3.6',
                  'Programming Language :: Python :: 3.7',
+                 'Programming Language :: Python :: 3.8',
+                 'Programming Language :: Python :: 3.9',
+                 'Programming Language :: Python :: 3.10',
+                 'Programming Language :: Python :: 3.11',
+                 'Programming Language :: Python :: 3.12',
                  ],
     ext_modules = cythonize(ext_modules, include_path=sys.path,
                             compile_time_env=compile_time_env),

@@ -266,7 +266,7 @@ cdef class CoinBackend(GenericBackend):
 
         return n + number -1
 
-    cpdef set_variable_type(self, int variable, int vtype):
+    cpdef set_variable_type(self, int variable, int vtype) noexcept:
         r"""
         Sets the type of a variable
 
@@ -302,7 +302,7 @@ cdef class CoinBackend(GenericBackend):
         else:
             self.si.setContinuous(variable)
 
-    cpdef set_sense(self, int sense):
+    cpdef set_sense(self, int sense) noexcept:
         r"""
         Sets the direction (maximization/minimization).
 
@@ -325,7 +325,7 @@ cdef class CoinBackend(GenericBackend):
         """
         self.si.setObjSense(-sense)
 
-    cpdef objective_coefficient(self, int variable, coeff=None):
+    cpdef objective_coefficient(self, int variable, coeff=None) noexcept:
         """
         Set or get the coefficient of a variable in the objective function
 
@@ -353,7 +353,7 @@ cdef class CoinBackend(GenericBackend):
         else:
             return self.si.getObjCoefficients()[variable]
 
-    cpdef set_objective(self, list coeff, d = 0.0):
+    cpdef set_objective(self, list coeff, d = 0.0) noexcept:
         r"""
         Sets the objective function.
 
@@ -394,7 +394,7 @@ cdef class CoinBackend(GenericBackend):
 
         self.obj_constant_term = d
 
-    cpdef set_verbosity(self, int level):
+    cpdef set_verbosity(self, int level) noexcept:
         r"""
         Sets the log (verbosity) level
 
@@ -411,7 +411,7 @@ cdef class CoinBackend(GenericBackend):
         """
         self.model.setLogLevel(level)
 
-    cpdef remove_constraint(self, int i):
+    cpdef remove_constraint(self, int i) noexcept:
         r"""
         Remove a constraint from self.
 
@@ -453,7 +453,7 @@ cdef class CoinBackend(GenericBackend):
         rows[0] = i
         self.si.deleteRows(1,rows)
 
-    cpdef remove_constraints(self, constraints):
+    cpdef remove_constraints(self, constraints) noexcept:
         r"""
         Remove several constraints.
 
@@ -509,7 +509,7 @@ cdef class CoinBackend(GenericBackend):
         self.si.deleteRows(m,rows)
         sig_free(rows)
 
-    cpdef add_linear_constraint(self, coefficients, lower_bound, upper_bound, name = None):
+    cpdef add_linear_constraint(self, coefficients, lower_bound, upper_bound, name = None) noexcept:
         """
         Add a linear constraint.
 
@@ -561,7 +561,7 @@ cdef class CoinBackend(GenericBackend):
             self.row_names.append("")
         del *row
 
-    cpdef row(self, int index):
+    cpdef row(self, int index) noexcept:
         r"""
         Returns a row
 
@@ -607,7 +607,7 @@ cdef class CoinBackend(GenericBackend):
 
         return (indices, values)
 
-    cpdef row_bounds(self, int i):
+    cpdef row_bounds(self, int i) noexcept:
         r"""
         Returns the bounds of a specific constraint.
 
@@ -643,7 +643,7 @@ cdef class CoinBackend(GenericBackend):
         return (lb[i] if lb[i] != - self.si.getInfinity() else None,
                 ub[i] if ub[i] != + self.si.getInfinity() else None)
 
-    cpdef col_bounds(self, int i):
+    cpdef col_bounds(self, int i) noexcept:
         r"""
         Returns the bounds of a specific variable.
 
@@ -680,7 +680,7 @@ cdef class CoinBackend(GenericBackend):
                 ub[i] if ub[i] != + self.si.getInfinity() else None)
 
     IF HAVE_ADD_COL_UNTYPED_ARGS:
-        cpdef add_col(self, indices, coeffs):
+        cpdef add_col(self, indices, coeffs) noexcept:
             r"""
             Adds a column.
 
@@ -743,7 +743,7 @@ cdef class CoinBackend(GenericBackend):
             sig_free(c_indices)
             sig_free(c_values)
     ELSE:
-        cpdef add_col(self, list list_indices, list list_coeffs):
+        cpdef add_col(self, list list_indices, list list_coeffs) noexcept:
             r"""
             Adds a column.
 
@@ -851,7 +851,7 @@ cdef class CoinBackend(GenericBackend):
 
         return 0
 
-    cpdef get_objective_value(self):
+    cpdef get_objective_value(self) noexcept:
         r"""
         Returns the value of the objective function.
 
@@ -878,7 +878,7 @@ cdef class CoinBackend(GenericBackend):
         """
         return self.model.solver().getObjValue() + <double>self.obj_constant_term
 
-    cpdef get_variable_value(self, int variable):
+    cpdef get_variable_value(self, int variable) noexcept:
         r"""
         Returns the value of a variable given by the solver.
 
@@ -921,7 +921,7 @@ cdef class CoinBackend(GenericBackend):
         else:
             return int(round(v))
 
-    cpdef int ncols(self):
+    cpdef int ncols(self) noexcept:
         r"""
         Returns the number of columns/variables.
 
@@ -939,7 +939,7 @@ cdef class CoinBackend(GenericBackend):
 
         return self.si.getNumCols()
 
-    cpdef int nrows(self):
+    cpdef int nrows(self) noexcept:
         r"""
         Returns the number of rows/constraints.
 
@@ -956,7 +956,7 @@ cdef class CoinBackend(GenericBackend):
         return self.si.getNumRows()
 
 
-    cpdef bint is_variable_binary(self, int index):
+    cpdef bint is_variable_binary(self, int index) noexcept:
         r"""
         Tests whether the given variable is of binary type.
 
@@ -982,7 +982,7 @@ cdef class CoinBackend(GenericBackend):
                 self.variable_lower_bound(index) == 0 and
                 self.variable_upper_bound(index) == 1)
 
-    cpdef bint is_variable_integer(self, int index):
+    cpdef bint is_variable_integer(self, int index) noexcept:
         r"""
         Tests whether the given variable is of integer type.
 
@@ -1006,7 +1006,7 @@ cdef class CoinBackend(GenericBackend):
                 (self.variable_lower_bound(index) != 0 or
                 self.variable_upper_bound(index) != 1))
 
-    cpdef bint is_variable_continuous(self, int index):
+    cpdef bint is_variable_continuous(self, int index) noexcept:
         r"""
         Tests whether the given variable is of continuous/real type.
 
@@ -1032,7 +1032,7 @@ cdef class CoinBackend(GenericBackend):
         return 1 == self.si.isContinuous(index)
 
 
-    cpdef bint is_maximization(self):
+    cpdef bint is_maximization(self) noexcept:
         r"""
         Tests whether the problem is a maximization
 

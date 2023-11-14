@@ -1149,12 +1149,14 @@ cdef class CoinBackend(GenericBackend):
             EXAMPLES::
 
                 sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
+                sage: import tempfile
                 sage: p = CoinBackend()
                 sage: p.add_variables(2)
                 1
                 sage: p.add_linear_constraint([(0, 1), (1, 2)], None, 3)
                 sage: p.set_objective([2, 5])
-                sage: p.write_mps(os.path.join(SAGE_TMP, "lp_problem.mps"), 0)
+                sage: with tempfile.TemporaryDirectory() as f:
+                ....:     p.write_mps(os.path.join(f, "lp_problem.mps"), 0)
             """
 
             cdef char * mps = "mps"
@@ -1172,12 +1174,14 @@ cdef class CoinBackend(GenericBackend):
             EXAMPLES::
 
                 sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
+                sage: import tempfile
                 sage: p = CoinBackend()
                 sage: p.add_variables(2)
                 1
                 sage: p.add_linear_constraint([(0, 1), (1, 2)], None, 3)
                 sage: p.set_objective([2, 5])
-                sage: p.write_lp(os.path.join(SAGE_TMP, "lp_problem.lp"))
+                sage: with tempfile.TemporaryDirectory() as f:
+                ....:     p.write_lp(os.path.join(f, "lp_problem.lp"))
             """
 
             cdef char * lp = "lp"
@@ -1195,12 +1199,14 @@ cdef class CoinBackend(GenericBackend):
             EXAMPLES::
 
                 sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
+                sage: import tempfile
                 sage: p = CoinBackend()
                 sage: p.add_variables(2)
                 1
                 sage: p.add_linear_constraint([(0, 1), (1, 2)], None, 3)
                 sage: p.set_objective([2, 5])
-                sage: p.write_mps(os.path.join(SAGE_TMP, "lp_problem.mps"), 0)
+                sage: with tempfile.TemporaryDirectory() as f:
+                ....:     p.write_mps(os.path.join(f, "lp_problem.mps"), 0)
             """
 
             cdef char * mps = "mps"
@@ -1217,12 +1223,14 @@ cdef class CoinBackend(GenericBackend):
             EXAMPLES::
 
                 sage: from sage_numerical_backends_coin.coin_backend import CoinBackend
+                sage: import tempfile
                 sage: p = CoinBackend()
                 sage: p.add_variables(2)
                 1
                 sage: p.add_linear_constraint([(0, 1), (1, 2)], None, 3)
                 sage: p.set_objective([2, 5])
-                sage: p.write_lp(os.path.join(SAGE_TMP, "lp_problem.lp"))
+                sage: with tempfile.TemporaryDirectory() as f:
+                ....:     p.write_lp(os.path.join(f, "lp_problem.lp"))
             """
 
             cdef char * lp = "lp"

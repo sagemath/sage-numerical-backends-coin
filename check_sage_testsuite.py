@@ -25,7 +25,7 @@ files = ["coding",
          "game_theory/",
          "geometry/polyhedron/base.py", "geometry/cone.py",
          "graphs/",
-         "homology/simplicial_complex.py",
+         "topology/simplicial_complex.py",
          "knots/",
          "matroids/",
          "sat/"]

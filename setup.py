@@ -61,6 +61,11 @@ compile_time_env = {'HAVE_SAGE_CPYTHON_STRING': True,
                     'HAVE_ADD_COL_UNTYPED_ARGS': True}
 print("Using compile_time_env: {}".format(compile_time_env), file=sys.stderr)
 
+if any(x in sys.argv
+       for x in ['build', 'build_ext', 'bdist_wheel', 'install']):
+    ext_modules = cythonize(ext_modules, include_path=sys.path,
+                            compile_time_env=compile_time_env),
+
 setup(
     name="sage_numerical_backends_coin",
     version=readfile("VERSION").strip(),
@@ -87,8 +92,7 @@ setup(
                  'Programming Language :: Python :: 3.11',
                  'Programming Language :: Python :: 3.12',
                  ],
-    ext_modules = cythonize(ext_modules, include_path=sys.path,
-                            compile_time_env=compile_time_env),
+    ext_modules=ext_modules,
     cmdclass = {'test': SageTest, 'check_sage_testsuite': SageTestSage}, # adding a special setup command for tests
     keywords=['milp', 'linear-programming', 'optimization'],
     packages=['sage_numerical_backends_coin'],

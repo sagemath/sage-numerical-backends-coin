@@ -57,7 +57,7 @@ jobs:
       # SPKGs to install as system packages
       SPKGS: _bootstrap _prereq
       # Non-Python packages to install as spkgs
-      TARGETS_PRE: zlib-ensure bzip2-ensure pkgconf-ensure cbc-no-deps
+      TARGETS_PRE: zlib-ensure bzip2-ensure pkgconf-ensure openblas-ensure coinbrew cbc-no-deps
       #
       CIBW_BUILD: "*${{ matrix.build }}*"
       # Disable building PyPy wheels on all platforms

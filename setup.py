@@ -64,7 +64,7 @@ print("Using compile_time_env: {}".format(compile_time_env), file=sys.stderr)
 if any(x in sys.argv
        for x in ['build', 'build_ext', 'bdist_wheel', 'install']):
     ext_modules = cythonize(ext_modules, include_path=sys.path,
-                            compile_time_env=compile_time_env),
+                            compile_time_env=compile_time_env)
 
 setup(
     name="sage_numerical_backends_coin",

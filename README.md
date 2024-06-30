@@ -1,7 +1,7 @@
 # sage-numerical-backends-coin: COIN-OR mixed integer linear programming backend for SageMath
 
 [![PyPI](https://img.shields.io/pypi/v/sage-numerical-backends-coin)](https://pypi.org/project/sage-numerical-backends-coin/ "PyPI: sage-numerical-backends-coin")
-[![GitHub Workflow Status](https://github.com/mkoeppe/sage-numerical-backends-coin/workflows/Build%20and%20test%20Python%20package/badge.svg)](https://github.com/mkoeppe/sage-numerical-backends-coin/actions "GitHub Actions: sage-numerical-backends-coin")
+[![GitHub Workflow Status](https://github.com/sagemath/sage-numerical-backends-coin/workflows/Build%20and%20test%20Python%20package/badge.svg)](https://github.com/sagemath/sage-numerical-backends-coin/actions "GitHub Actions: sage-numerical-backends-coin")
 
 `CoinBackend` has previously been available as part of the [SageMath](http://www.sagemath.org/) source tree,
 from which it is built as an "optional extension" when the `cbc` Sage package is installed.
@@ -33,7 +33,7 @@ Install this package from PyPI using
 
 or from GitHub using
 
-    $ sage -python -m pip install git+https://github.com/mkoeppe/sage-numerical-backends-coin
+    $ sage -python -m pip install git+https://github.com/sagemath/sage-numerical-backends-coin
 
 (See [`.github/workflows/build.yml`](.github/workflows/build.yml) for details about package prerequisites on various systems.)
 

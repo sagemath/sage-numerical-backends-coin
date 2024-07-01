@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 """
 Check portions of the sage test suite, with default mip solver set to ours.
 

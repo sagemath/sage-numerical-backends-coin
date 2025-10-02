@@ -4,7 +4,6 @@ requires = [
     'pkgconfig',
     'cython >=3.0, != 3.0.3, <4.0',
     'cysignals >=1.10.2',
-    'sagemath-environment',
-    'sagemath-categories',
+    'sagemath',
 ]
 build-backend = "setuptools.build_meta"

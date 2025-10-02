@@ -9,7 +9,7 @@ from setuptools.command.test import test as TestCommand # for tests
 from Cython.Build import cythonize
 from Cython.Compiler.Errors import CompileError
 from codecs import open # To open the README file with proper encoding
-from sage.env import sage_include_directories
+from sage.config import get_include_dirs
 
 # For the tests
 class SageTest(TestCommand):
@@ -52,7 +52,7 @@ ext_modules = [Extension('sage_numerical_backends_coin.coin_backend',
                          sources=[os.path.join('sage_numerical_backends_coin',
                                     'coin_backend.pyx')],
                          libraries=cbc_libs,
-                         include_dirs=sage_include_directories() + cbc_include_dirs,
+                         include_dirs=list(map(str, get_include_dirs())) + cbc_include_dirs,
                          library_dirs=cbc_library_dirs,
                          extra_compile_args=['-std=c++11'])
     ]
@@ -63,7 +63,7 @@ print("Using compile_time_env: {}".format(compile_time_env), file=sys.stderr)
 
 if any(x in sys.argv
        for x in ['build', 'build_ext', 'bdist_wheel', 'install']):
-    ext_modules = cythonize(ext_modules, include_path=sys.path,
+    ext_modules = cythonize(ext_modules, include_path=list(map(str, get_include_dirs())) + sys.path,
                             compile_time_env=compile_time_env)
 
 setup(

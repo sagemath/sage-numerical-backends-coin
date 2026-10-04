@@ -9,7 +9,7 @@ from setuptools.command.test import test as TestCommand # for tests
 from Cython.Build import cythonize
 from Cython.Compiler.Errors import CompileError
 from codecs import open # To open the README file with proper encoding
-from sage.config import get_include_dirs
+from sage.misc.cython import get_include_dirs
 
 # For the tests
 class SageTest(TestCommand):
